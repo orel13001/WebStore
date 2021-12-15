@@ -12,6 +12,7 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage(); //позволяет перехватывать все исключения приложения
 }
 
+app.UseRouting(); //Добавление пользовательской маршрутизации
 
 //Загрузка инфы из файла конфигурации
 
@@ -20,11 +21,15 @@ if (app.Environment.IsDevelopment())
 
 
 
+// Стандартная маршрутизация перехватывает все обращения к корню сайта
+//app.MapGet("/", () => app.Configuration["CustomGreetings"]);
 
-app.MapGet("/", () => app.Configuration["CustomGreetings"]);
+
 app.MapGet("/throw", () =>
     {
         throw new ApplicationException("Ошибка в программе"); //генерация исключения для проверки диагностики
     });
+
+app.MapDefaultControllerRoute(); //Добавление обработки входящих подключений к MVC
 
 app.Run();
