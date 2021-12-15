@@ -9,5 +9,12 @@ namespace WebStore.Controllers
             //return Content("Data from new controller");
             return View();
         }
+
+        public string ConfiguredAction(string id)
+        {
+            return $"Hellow World {id}!";
+        }
     }
+
+    
 }
