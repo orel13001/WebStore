@@ -19,7 +19,7 @@
                 <th>Имя</th>
                 <th>Отчество</th>
                 <th>Возраст</th>
-                <th></th>
+                <th>карточка сотрудника</th>
             </tr>
         </thead>
         <tbody>
@@ -31,13 +31,15 @@
                    <td>@employee.FirstName</td>
                    <td>@employee.Patronomic</td>
                    <td>@employee.Age</td>
-                   <td>@employee</td>
+                   <td>
+                       <a href = "~/home/employee/@employee.Id">инфо.</a>
+                   </td>
                </tr>
            }
         </tbody>
     </table>
     <hr />
-	<a href="/Home/Index">Главная страница</a>
+	<a href="~/Home/Index">Главная страница</a>
 
 
 </body>

@@ -28,6 +28,15 @@ namespace WebStore.Controllers
         {
             return View(_Employees);
         }
+
+        public IActionResult EmployeesInfo(int id)
+        {
+            var employee = _Employees.FirstOrDefault(o => o.Id == id);
+            
+            if (employee == null)
+                return NotFound();
+            return View(employee);
+        }
     }
 
     
