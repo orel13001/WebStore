@@ -32,7 +32,7 @@
                    <td>@employee.Patronomic</td>
                    <td>@employee.Age</td>
                    <td>
-                       <a href = "~/home/employee/@employee.Id">инфо.</a>
+                       <a asp-action="EmployeesInfo", asp-route-id="@employee.Id">инфо.</a>
                    </td>
                </tr>
            }
