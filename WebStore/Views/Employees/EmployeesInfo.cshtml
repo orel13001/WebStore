@@ -5,10 +5,10 @@
 }
 
 
-<div>
+<div class="container">
     <h4>Сотрудник</h4>
     <hr />
-    @*<dl class="row">
+    <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Id)
         </dt>
@@ -39,9 +39,9 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Age)
         </dd>
-    </dl>*@
+    </dl>
 
-    <table>
+    @*<table>
         
         <tbody>
            <tr>
@@ -65,9 +65,9 @@
                <td>@Model.Age</td>
            
         </tbody>
-    </table>
+    </table>*@
 </div>
 <div>
     @*@Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |*@
-    <a asp-action="Employees">назад к списку</a>
+    <a asp-controller="Employees" asp-action="Index">назад к списку</a>
 </div>
