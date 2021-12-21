@@ -17,7 +17,7 @@ namespace WebStore.Controllers
             return $"Hellow World {id}!";
         }
 
-
+        public void Throw(string Message) => throw new ApplicationException(Message);  
        
        
     }

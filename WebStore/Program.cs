@@ -53,7 +53,7 @@ app.MapGet("/throw", () =>
         throw new ApplicationException("Ошибка в программе"); //генерация исключения для проверки диагностики
     });
 
-app.MapDefaultControllerRoute(); //Добавление обработки входящих подключений к MVC (стандартный маршрут по умолчанию)
+app.MapDefaultControllerRoute(); //Добавление обработки входящих подключений к MVC (стандартный маршрут по умолчанию "{controller=Home}/{action=Index}/{id?}")
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}"); //настраиваемый маршрут. 

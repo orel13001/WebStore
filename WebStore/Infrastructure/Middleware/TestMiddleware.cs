@@ -14,6 +14,11 @@
 
         public async Task Invoke(HttpContext context)
         {
+
+            var controller_name = context.Request.RouteValues["controller"]; //Получение параметров маршрутизации: контроллер
+            var action_name = context.Request.RouteValues["action"]; //Получение параметров маршрутизации: действие
+            //здесь же можно добавлять параметры в маршрут. Потом добавленные параметры можно прочитать в контроллере
+
             // Обработка информации из context.Request
 
             var processing_task = _Next(context);//далее работает остальная часть конвейера
