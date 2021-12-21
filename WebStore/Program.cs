@@ -1,13 +1,15 @@
 using WebStore.Infrastructure.Conventions;
+using WebStore.Infrastructure.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-#region Настройка построителя приложения - определение содержимого
+#region Настройка построителя приложения - определение содержимого (определяется набор сервисов приложения и его бизнесс-логика)
 var servises = builder.Services;
 servises.AddControllersWithViews(opt =>
 {
     opt.Conventions.Add(new TestConvention()); //Добавление соглашений
 }); // добавление инфраструктуры MVC с контроллерами и представлениими
+
 //servises.AddMvc(); // базовая инфраструктура MVC
 //servises.AddControllers(); // Добавление только контроллеров (обычно для WebAPI )
 
@@ -17,16 +19,23 @@ servises.AddControllersWithViews(opt =>
 
 var app = builder.Build();
 
+#region Определение конвейера обработки входящих подключений из блоков промежуточного ПО
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage(); //позволяет перехватывать все исключения приложения
 }
 
+app.Map("/testpath", async context => await context.Response.WriteAsync("TestMiddleWare")); //Простое самописное промежуточное ПО ("/testpath" - адрес по которому оно вызывается. Далее выполняемый метод)
+
 //Добавляем в конвейер  обработки входного подключения промежуточного ПО, которое будет обнаруживать запрос к файлу в wwwroot
 //(по сути добавление файл-сервера для стандартных статических ресурсов)
-app.UseStaticFiles(); 
+app.UseStaticFiles();
 
 app.UseRouting(); //Добавление пользовательской маршрутизации
+
+app.UseMiddleware<TestMiddleware>();
+
+app.UseWelcomePage("/welcome"); //Добавление ПО встроенной странички приветствия
 
 //Загрузка инфы из файла конфигурации
 
@@ -49,4 +58,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}"); //настраиваемый маршрут. 
 
+#endregion
 app.Run();
