@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebStore.Models;
+using WebStore.Data;
 
 namespace WebStore.Controllers
 { 
@@ -7,12 +8,12 @@ namespace WebStore.Controllers
     //[Route("Staff/{action=Index}/{Id?}")]     // Маршрутов может быть несколько
     public class EmployeesController : Controller
     {
-        private static readonly List<Employee> _Employees = new List<Employee>()
+        private ICollection<Employee> _Employees;
+
+        public EmployeesController()
         {
-            new Employee() { Id = 1, LastName = "Иванов", FirstName = "Иван", Patronomic = "Иванович", Age = 27 },
-            new Employee() { Id = 2, LastName = "Петров", FirstName = "Петр", Patronomic = "Петрович", Age = 30 },
-            new Employee() { Id = 3, LastName = "Сидоров", FirstName = "Сидр", Patronomic = "Сидорович", Age = 27 }
-        };
+            _Employees = TestData.Employees;
+        }
         public IActionResult Index()
         {
             return View(_Employees);
