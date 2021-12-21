@@ -1,8 +1,18 @@
+using WebStore.Infrastructure.Conventions;
+
 var builder = WebApplication.CreateBuilder(args);
 
+#region Настройка построителя приложения - определение содержимого
 var servises = builder.Services;
-servises.AddControllersWithViews(); // добавление инфраструктуры MVC (контроллеры и представления)
+servises.AddControllersWithViews(opt =>
+{
+    opt.Conventions.Add(new TestConvention()); //Добавление соглашений
+}); // добавление инфраструктуры MVC с контроллерами и представлениими
+//servises.AddMvc(); // базовая инфраструктура MVC
+//servises.AddControllers(); // Добавление только контроллеров (обычно для WebAPI )
 
+
+#endregion
 
 
 var app = builder.Build();
