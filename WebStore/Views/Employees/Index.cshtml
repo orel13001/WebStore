@@ -26,6 +26,7 @@
                    <td>@employee.Age</td>
                    <td>
                        <a asp-action="EmployeesInfo", asp-route-id="@employee.Id">инфо.</a>
+                       <a asp-action="Edit", asp-route-id="@employee.Id">редактиование</a>
                    </td>
                </tr>
            }

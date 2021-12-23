@@ -2,6 +2,7 @@
 using WebStore.Models;
 using WebStore.ViewModels;
 using WebStore.Data;
+using WebStore.Services.Interfaces;
 
 namespace WebStore.Controllers
 { 
@@ -9,21 +10,22 @@ namespace WebStore.Controllers
     //[Route("Staff/{action=Index}/{Id?}")]     // Маршрутов может быть несколько
     public class EmployeesController : Controller
     {
-        private ICollection<Employee> _Employees;
-
-        public EmployeesController()
+        //private ICollection<Employee> _Employees;
+        private readonly IEmployeesData _EmployeesData;
+        public EmployeesController(IEmployeesData EmployeesData)
         {
-            _Employees = TestData.Employees;
+            _EmployeesData = EmployeesData;
         }
         public IActionResult Index()
         {
-            return View(_Employees);
+            var result = _EmployeesData.GetAll();
+            return View(result);
         }
 
         //[Route("~/employees/info-{id}")] // Маршрутизация для отдельного метода
         public IActionResult EmployeesInfo(int id)
         {
-            var employee = _Employees.FirstOrDefault(o => o.Id == id);
+            var employee = _EmployeesData.GetById(id);
 
             if (employee == null)
                 return NotFound();
@@ -39,7 +41,7 @@ namespace WebStore.Controllers
         /// <returns></returns>
         public IActionResult Edit(int id)
         {
-            var employee = _Employees.FirstOrDefault(o => id == o.Id);
+            var employee = _EmployeesData.GetById(id);
 
             if (employee == null)
                 return NotFound();
@@ -62,9 +64,21 @@ namespace WebStore.Controllers
         /// </summary>
         /// <param name="Model"></param>
         /// <returns></returns>
+        [HttpPost]
         public IActionResult Edit(EmployeeEditViewModel Model)
         {
             //Обработка модели...
+            var employee = new Employee()
+            {
+                Id = Model.Id,
+                LastName = Model.LastName,
+                FirstName = Model.FirstName,
+                Age = Model.Age,
+                Patronomic = Model.Patronymic,
+            };
+
+            if(!_EmployeesData.Edit(employee))
+                return NotFound();
 
             return RedirectToAction("Index");
         }
