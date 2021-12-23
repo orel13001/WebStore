@@ -1,5 +1,7 @@
 using WebStore.Infrastructure.Conventions;
 using WebStore.Infrastructure.Middleware;
+using WebStore.Services;
+using WebStore.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,8 @@ servises.AddControllersWithViews(opt =>
 {
     opt.Conventions.Add(new TestConvention()); //Добавление соглашений
 }); // добавление инфраструктуры MVC с контроллерами и представлениими
+servises.AddSingleton<IEmployeesData, InMemoryEmployeesData>(); // Singleton, потому что InMemory
+
 
 //servises.AddMvc(); // базовая инфраструктура MVC
 //servises.AddControllers(); // Добавление только контроллеров (обычно для WebAPI )
