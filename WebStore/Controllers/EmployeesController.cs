@@ -39,9 +39,12 @@ namespace WebStore.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int? id)
         {
-            var employee = _EmployeesData.GetById(id);
+            if(id == null)
+                return View(new EmployeeEditViewModel());
+
+            var employee = _EmployeesData.GetById((int)id);
 
             if (employee == null)
                 return NotFound();
@@ -77,7 +80,9 @@ namespace WebStore.Controllers
                 Patronomic = Model.Patronymic,
             };
 
-            if(!_EmployeesData.Edit(employee))
+            if(Model.Id == 0)
+                _EmployeesData.Add(employee);
+            else if(!_EmployeesData.Edit(employee))
                 return NotFound();
 
             return RedirectToAction("Index");
