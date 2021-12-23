@@ -12,8 +12,10 @@ namespace WebStore.Controllers
     {
         //private ICollection<Employee> _Employees;
         private readonly IEmployeesData _EmployeesData;
-        public EmployeesController(IEmployeesData EmployeesData)
+        private readonly ILogger<EmployeesController> _Logger;
+        public EmployeesController(IEmployeesData EmployeesData, ILogger<EmployeesController> Logger)
         {
+            _Logger = Logger;
             _EmployeesData = EmployeesData;
         }
         public IActionResult Index()
@@ -83,8 +85,12 @@ namespace WebStore.Controllers
             if(Model.Id == 0)
                 _EmployeesData.Add(employee);
             else if(!_EmployeesData.Edit(employee))
+            {
+                _Logger.LogWarning("Попытка редактирования отсутствующего сотрудника с id {0}", employee.Id); // при вызове логгера не используем интерполяцию
                 return NotFound();
+            }
 
+            _Logger.LogWarning("Редактирование сотрудника с id {0}", employee.Id); // при вызове логгера не используем интерполяцию
             return RedirectToAction("Index");
         }
 
@@ -115,8 +121,12 @@ namespace WebStore.Controllers
         public IActionResult DeleteConfirmed(int id)
         {
             if(!_EmployeesData.Delete(id))
+            {
+                _Logger.LogWarning("Попытка удаления отсутствующего сотрудника с id {0}", id); // при вызове логгера не используем интерполяцию
                 return NotFound();
+            }
 
+            _Logger.LogWarning("Сотрудник с id {0} удалён", id); // при вызове логгера не используем интерполяцию
             return RedirectToAction("Index");
         }
     }
