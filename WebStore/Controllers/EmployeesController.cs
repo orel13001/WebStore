@@ -73,6 +73,17 @@ namespace WebStore.Controllers
         public IActionResult Edit(EmployeeEditViewModel Model)
         {
             //Обработка модели...
+
+            if (Model.FirstName=="Усама" && Model.LastName=="Бен" && Model.Patronymic=="Ладен")
+            {
+                ModelState.AddModelError("", "Террористов на работу не принемаем!");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(Model);
+            }
+
             var employee = new Employee()
             {
                 Id = Model.Id,
