@@ -11,7 +11,7 @@ namespace WebStore.ViewModels
     /// <summary>
     /// ViewModel сотрудника - оболочка для действия "редактирование" сотрудника
     /// </summary>
-    public class EmployeeEditViewModel
+    public class EmployeeEditViewModel : IValidatableObject 
     {
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
@@ -35,5 +35,13 @@ namespace WebStore.ViewModels
         [Display(Name = "Возраст")]
         [Range(18,80,ErrorMessage ="Возраст должен быть от 18 до 80 лет")]
         public int Age { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext Context)
+        {
+            if (LastName.Length > 100)
+            {
+                yield return new ValidationResult("Длинна фамилии больше 100 символов"); // Пользовательская валидация с помощью интерфейса IValidatableObject
+            };
+        }
     }
 }

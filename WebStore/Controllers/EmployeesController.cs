@@ -74,11 +74,13 @@ namespace WebStore.Controllers
         {
             //Обработка модели...
 
+            //Собственная валидация в пределах контроллеро
             if (Model.FirstName=="Усама" && Model.LastName=="Бен" && Model.Patronymic=="Ладен")
             {
                 ModelState.AddModelError("", "Террористов на работу не принемаем!");
             }
 
+            //Обработка ошибок валидации
             if (!ModelState.IsValid)
             {
                 return View(Model);
