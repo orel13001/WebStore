@@ -15,13 +15,13 @@ namespace WebStore.Services
         public IEnumerable<Product> GetProducts (ProductFilter? Filter = null)
         {
             IEnumerable<Product> products = TestData.Products;
-            if (Filter.SectionId != null)
+            if (Filter?.SectionId != null)
             {
                 products = products.Where(o => o.SectionId == Filter.SectionId);
 
             }
 
-            if(Filter.BrandId != null)
+            if(Filter?.BrandId != null)
             {
                 products = products.Where(o => o.BrandId == Filter.BrandId);
             }
