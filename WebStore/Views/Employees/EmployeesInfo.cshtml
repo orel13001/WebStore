@@ -41,31 +41,12 @@
         </dd>
     </dl>
 
-    @*<table>
-        
-        <tbody>
-           <tr>
-               <td>Id</td>
-               <td>@Model.Id</td>
-           </tr>
-           <tr>
-               <td>Фамилия</td>
-               <td>@Model.LastName</td>
-           </tr>
-           <tr>
-               <td>Имя</td>
-               <td>@Model.FirstName</td>
-           </tr>
-           <tr>
-               <td>Отчество</td>
-               <td>@Model.Patronomic</td>
-           </tr>
-           <tr>
-               <td>Возраст</td>
-               <td>@Model.Age</td>
-           
-        </tbody>
-    </table>*@
+     <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">
+         <i class="fa fa-edit"></i>
+     </a>
     <a asp-controller="Employees" asp-action="Index">назад к списку</a>
+    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">
+         <i class="fa fa-trash-o"></i>
+     </a>
 </div>
 
