@@ -10,9 +10,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore", "WebStore\WebSto
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{57844114-06A0-4DFA-B846-04B8E009D83E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{B7C6DDB3-CCF7-4045-A3EA-77F830C0631B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConsole", "TestConsole\TestConsole.csproj", "{B7C6DDB3-CCF7-4045-A3EA-77F830C0631B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStore.Domain", "WebStore.Domain\WebStore.Domain.csproj", "{F4945715-F188-4913-9EE7-9FF405840689}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.Domain", "WebStore.Domain\WebStore.Domain.csproj", "{F4945715-F188-4913-9EE7-9FF405840689}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStore.DAL", "WebStore.DAL\WebStore.DAL.csproj", "{2B48712D-0C64-4B35-99CD-100662188469}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{F4945715-F188-4913-9EE7-9FF405840689}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4945715-F188-4913-9EE7-9FF405840689}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4945715-F188-4913-9EE7-9FF405840689}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B48712D-0C64-4B35-99CD-100662188469}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B48712D-0C64-4B35-99CD-100662188469}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B48712D-0C64-4B35-99CD-100662188469}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B48712D-0C64-4B35-99CD-100662188469}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
