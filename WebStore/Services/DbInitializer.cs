@@ -40,8 +40,31 @@ namespace WebStore.Services
             }
 
             await InitializeProductAsync(Cancel).ConfigureAwait(false);
+            await InitializeEmployeeAsync(Cancel).ConfigureAwait(false);
+
             _logger.LogInformation("Инициализация БД выполнена успешно");
 
+        }
+
+        private async Task InitializeEmployeeAsync(CancellationToken Cancel)
+        {
+            if (_db.Employees.Any())
+            {
+                _logger.LogInformation("Инициализация тестовых данных не требуется");
+                return;
+            }
+
+            _logger.LogInformation("Инициализация тестовых данных ...");
+
+            _logger.LogInformation("Добавление сотрудников в БД ...");
+            await using (await _db.Database.BeginTransactionAsync(Cancel))
+            {
+                await _db.Employees.AddRangeAsync(TestData.Employees, Cancel);
+                await _db.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Employees] ON", Cancel);
+                await _db.SaveChangesAsync(Cancel);
+                await _db.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Employees] OFF", Cancel);
+                await _db.Database.CommitTransactionAsync(Cancel);
+            }
         }
 
         private async Task InitializeProductAsync(CancellationToken Cancel)
