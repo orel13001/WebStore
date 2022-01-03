@@ -1,5 +1,6 @@
 ﻿using WebStore.Data;
 using WebStore.Models;
+
 using WebStore.Services.Interfaces;
 
 namespace WebStore.Services.InMemory
@@ -13,7 +14,7 @@ namespace WebStore.Services.InMemory
         public InMemoryEmployeesData(ILogger<InMemoryEmployeesData> Logger) //ILogger- интерфейс. InMemoryEmployeesData - заголовок, который пишется в лог
         {
             _Logger = Logger;
-            _Employees = TestData.Employees;
+            //_Employees = TestData.Employees;
             _MaxFreeId = _Employees.DefaultIfEmpty().Max(o => o?.Id ?? 0) + 1;
         }
 
