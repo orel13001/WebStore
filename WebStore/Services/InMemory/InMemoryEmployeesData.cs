@@ -2,7 +2,7 @@
 using WebStore.Models;
 using WebStore.Services.Interfaces;
 
-namespace WebStore.Services
+namespace WebStore.Services.InMemory
 {
     public class InMemoryEmployeesData : IEmployeesData
     {
@@ -19,7 +19,7 @@ namespace WebStore.Services
 
         public int Add(Employee employee)
         {
-            if(employee == null)
+            if (employee == null)
                 throw new ArgumentNullException(nameof(employee));
 
             if (_Employees.Contains(employee))
@@ -38,7 +38,7 @@ namespace WebStore.Services
             {
                 _Logger.LogWarning("Попытка удаления отсутствующего сотрудника с id {0}", id); // при вызове логгера не используем интерполяцию
                 return false;
-            }    
+            }
 
             _Employees.Remove(employee);
             _Logger.LogWarning("Сотрудник с id {0} удалён", id); // при вызове логгера не используем интерполяцию
@@ -74,6 +74,6 @@ namespace WebStore.Services
         public IEnumerable<Employee> GetAll() => _Employees;
 
         public Employee? GetById(int id) => _Employees.FirstOrDefault(employee => employee.Id == id);
-        
+
     }
 }
