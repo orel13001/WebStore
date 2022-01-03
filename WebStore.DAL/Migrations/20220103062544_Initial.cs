@@ -9,7 +9,7 @@ namespace WebStore.DAL.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Brandss",
+                name: "Brands",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -19,7 +19,7 @@ namespace WebStore.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Brandss", x => x.Id);
+                    table.PrimaryKey("PK_Brands", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -59,9 +59,9 @@ namespace WebStore.DAL.Migrations
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_Brandss_BrandId",
+                        name: "FK_Products_Brands_BrandId",
                         column: x => x.BrandId,
-                        principalTable: "Brandss",
+                        principalTable: "Brands",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -73,8 +73,8 @@ namespace WebStore.DAL.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Brandss_Name",
-                table: "Brandss",
+                name: "IX_Brands_Name",
+                table: "Brands",
                 column: "Name",
                 unique: true);
 
@@ -111,7 +111,7 @@ namespace WebStore.DAL.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Brandss");
+                name: "Brands");
 
             migrationBuilder.DropTable(
                 name: "Sections");

@@ -7,7 +7,7 @@ using WebStore.Domain.Entities.Base.Interfaces;
 
 namespace WebStore.Domain.Entities
 {
-    [Table("Brandss")] //свойство задаёт имя таблицы 
+    [Table("Brands")] //свойство задаёт имя таблицы 
     [Index(nameof(Name), IsUnique = true)]
     public class Brand : NamedEntity, IOrderEntity
     {

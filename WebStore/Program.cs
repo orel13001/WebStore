@@ -17,6 +17,7 @@ servises.AddSingleton<IEmployeesData, InMemoryEmployeesData>(); // Singleton, п
 servises.AddSingleton<IProductData, InMemoryProductData>(); // Singleton, потому что InMemory
 
 servises.AddDbContext<WebStoreDB>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
+servises.AddTransient<IDbInitializer, DbInitializer>();
 
 //servises.AddMvc(); // базовая инфраструктура MVC
 //servises.AddControllers(); // Добавление только контроллеров (обычно для WebAPI )
@@ -28,6 +29,13 @@ servises.AddDbContext<WebStoreDB>(opt => opt.UseSqlServer(builder.Configuration.
 var app = builder.Build();
 
 #region Определение конвейера обработки входящих подключений из блоков промежуточного ПО
+
+await using(var scope = app.Services.CreateAsyncScope())
+{
+    var db_initializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+    await db_initializer.InitializeAsync(RemoveBefore: true);
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage(); //позволяет перехватывать все исключения приложения
