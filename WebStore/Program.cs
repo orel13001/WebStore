@@ -15,9 +15,11 @@ servises.AddControllersWithViews(opt =>
 {
     opt.Conventions.Add(new TestConvention()); //Добавление соглашений
 }); // добавление инфраструктуры MVC с контроллерами и представлениими
-servises.AddSingleton<IEmployeesData, InMemoryEmployeesData>(); // Singleton, потому что InMemory
+//servises.AddSingleton<IEmployeesData, InMemoryEmployeesData>(); // Singleton, потому что InMemory
 //servises.AddSingleton<IProductData, InMemoryProductData>(); // Singleton, потому что InMemory
 servises.AddScoped<IProductData, InSqlProductData>();
+servises.AddScoped<IEmployeesData, InSqlEmployeeData>(); // Singleton, потому что InMemory
+
 
 servises.AddDbContext<WebStoreDB>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
 servises.AddTransient<IDbInitializer, DbInitializer>();
