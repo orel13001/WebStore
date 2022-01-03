@@ -18,8 +18,7 @@ servises.AddControllersWithViews(opt =>
 //servises.AddSingleton<IEmployeesData, InMemoryEmployeesData>(); // Singleton, потому что InMemory
 //servises.AddSingleton<IProductData, InMemoryProductData>(); // Singleton, потому что InMemory
 servises.AddScoped<IProductData, InSqlProductData>();
-servises.AddScoped<IEmployeesData, InSqlEmployeeData>(); // Singleton, потому что InMemory
-
+servises.AddScoped<IEmployeesData, InSqlEmployeeData>(); 
 
 servises.AddDbContext<WebStoreDB>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
 servises.AddTransient<IDbInitializer, DbInitializer>();
