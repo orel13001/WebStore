@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<WebStore.Models.Employee>
 
-<div class="container">
+    @{
+        Layout = "_LayoutContainer";
+    }
 
     <h3>Сотрудники</h3>
 
@@ -57,4 +59,3 @@
     }
     <hr />
 	<a  asp-controller="Home" asp-action="Index">Главная страница</a>
-</div>

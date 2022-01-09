@@ -6,7 +6,7 @@
 
 <h4>Редактирование сотрудника</h4>
 <hr />
-<div class="row">
+<div class="container">
     <div class="col-md-4">
         <form asp-action="Edit" asp-route-id="@Model.Id">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -43,7 +43,7 @@
     </div>
 </div>
 
-<div>
+<div class="container">
     <a asp-action="Index">Назад к списку</a>
     <a asp-controller="Employees" asp-action="Delete" asp-route-id="@Model.Id" class="text-danger">Удаление</a>
 </div>

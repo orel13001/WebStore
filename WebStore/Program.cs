@@ -12,6 +12,7 @@ servises.AddControllersWithViews(opt =>
     opt.Conventions.Add(new TestConvention()); //Добавление соглашений
 }); // добавление инфраструктуры MVC с контроллерами и представлениими
 servises.AddSingleton<IEmployeesData, InMemoryEmployeesData>(); // Singleton, потому что InMemory
+servises.AddSingleton<IProductData, InMemoryProductData>(); // Singleton, потому что InMemory
 
 
 //servises.AddMvc(); // базовая инфраструктура MVC
