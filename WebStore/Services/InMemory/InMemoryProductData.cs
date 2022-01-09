@@ -1,10 +1,9 @@
-﻿
-using WebStore.Data;
+﻿using WebStore.Data;
 using WebStore.Domain;
 using WebStore.Domain.Entities;
 using WebStore.Services.Interfaces;
 
-namespace WebStore.Services
+namespace WebStore.Services.InMemory
 {
     public class InMemoryProductData : IProductData
     {
@@ -12,7 +11,7 @@ namespace WebStore.Services
 
         public IEnumerable<Section> GetSections() => TestData.Sections;
 
-        public IEnumerable<Product> GetProducts (ProductFilter? Filter = null)
+        public IEnumerable<Product> GetProducts(ProductFilter? Filter = null)
         {
             IEnumerable<Product> products = TestData.Products;
             if (Filter?.SectionId != null)
@@ -21,7 +20,7 @@ namespace WebStore.Services
 
             }
 
-            if(Filter?.BrandId != null)
+            if (Filter?.BrandId != null)
             {
                 products = products.Where(o => o.BrandId == Filter.BrandId);
             }

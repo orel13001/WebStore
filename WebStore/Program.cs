@@ -1,6 +1,10 @@
+using Microsoft.EntityFrameworkCore;
+using WebStore.DAL.Context;
 using WebStore.Infrastructure.Conventions;
 using WebStore.Infrastructure.Middleware;
 using WebStore.Services;
+using WebStore.Services.InMemory;
+using WebStore.Services.InSQL;
 using WebStore.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,9 +15,13 @@ servises.AddControllersWithViews(opt =>
 {
     opt.Conventions.Add(new TestConvention()); //Добавление соглашений
 }); // добавление инфраструктуры MVC с контроллерами и представлениими
-servises.AddSingleton<IEmployeesData, InMemoryEmployeesData>(); // Singleton, потому что InMemory
-servises.AddSingleton<IProductData, InMemoryProductData>(); // Singleton, потому что InMemory
+//servises.AddSingleton<IEmployeesData, InMemoryEmployeesData>(); // Singleton, потому что InMemory
+//servises.AddSingleton<IProductData, InMemoryProductData>(); // Singleton, потому что InMemory
+servises.AddScoped<IProductData, InSqlProductData>();
+servises.AddScoped<IEmployeesData, InSqlEmployeeData>(); 
 
+servises.AddDbContext<WebStoreDB>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
+servises.AddTransient<IDbInitializer, DbInitializer>();
 
 //servises.AddMvc(); // базовая инфраструктура MVC
 //servises.AddControllers(); // Добавление только контроллеров (обычно для WebAPI )
@@ -25,6 +33,13 @@ servises.AddSingleton<IProductData, InMemoryProductData>(); // Singleton, пот
 var app = builder.Build();
 
 #region Определение конвейера обработки входящих подключений из блоков промежуточного ПО
+
+await using(var scope = app.Services.CreateAsyncScope())
+{
+    var db_initializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+    await db_initializer.InitializeAsync(RemoveBefore: true);
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage(); //позволяет перехватывать все исключения приложения
