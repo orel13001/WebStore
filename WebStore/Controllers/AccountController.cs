@@ -45,7 +45,39 @@ namespace WebStore.Controllers
 
         }
 
-        public IActionResult Login() => View();
+        public IActionResult Login(string ReturnUrl) => View(new LoginViewModel() { ReturnUrl = ReturnUrl});
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var login_result = await _signInManager.PasswordSignInAsync(
+                model.UserName,
+                model.Password,
+                model.RememberMe,
+                true
+                );
+
+            if (login_result.Succeeded)
+            {
+                //return RedirectToAction(model.ReturnUrl); // Не безопасно!!!
+
+                //длинная запись
+                //if (Url.IsLocalUrl(model.ReturnUrl))
+                //{
+                //    return Redirect(model.ReturnUrl);
+                //}
+                //return RedirectToAction("Index", "Home");
+
+                //Короткая запись
+                return LocalRedirect(model.ReturnUrl ?? "/");
+            }
+
+            ModelState.AddModelError("", "Неверное имя пользователя или пароль");
+            return View(model);
+        }
 
         public IActionResult Logout() => RedirectToAction("Index","Home");
 
