@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebStore.DAL.Context;
+using WebStore.Domain.Entities.Identity;
 using WebStore.Infrastructure.Conventions;
 using WebStore.Infrastructure.Middleware;
 using WebStore.Services;
@@ -22,6 +24,46 @@ servises.AddScoped<IEmployeesData, InSqlEmployeeData>();
 
 servises.AddDbContext<WebStoreDB>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
 servises.AddTransient<IDbInitializer, DbInitializer>();
+
+servises.AddIdentity<User, Role>()              //Добавление сервиса идентификации
+    .AddEntityFrameworkStores<WebStoreDB>()     //Указание источника данных
+    .AddDefaultTokenProviders();                //указание токена по умолчанию
+
+//конфигурация сервиса идентификации
+servises.Configure<IdentityOptions>(opt =>
+{
+#if DEBUG
+    opt.Password.RequireDigit = false;
+    opt.Password.RequireLowercase = false;
+    opt.Password.RequireUppercase = false;
+    opt.Password.RequireNonAlphanumeric = false;
+    opt.Password.RequiredLength = 3;
+    opt.Password.RequiredUniqueChars = 3;
+#endif
+
+    opt.User.RequireUniqueEmail = false;
+    opt.User.AllowedUserNameCharacters = "abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_";
+
+    opt.Lockout.AllowedForNewUsers = false;
+    opt.Lockout.MaxFailedAccessAttempts = 10;
+    opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+});
+
+//настройка cookis
+servises.ConfigureApplicationCookie(opt =>
+{
+    opt.Cookie.Name = "WebStore_LSA";
+    opt.Cookie.HttpOnly = true;
+
+    opt.Cookie.Expiration = TimeSpan.FromDays(10);
+
+    opt.LoginPath = "/Account/Login";
+    opt.LogoutPath = "/Account/Logout";
+    opt.AccessDeniedPath = "/Account/AccessDenide";
+
+    opt.SlidingExpiration = true;
+
+});
 
 //servises.AddMvc(); // базовая инфраструктура MVC
 //servises.AddControllers(); // Добавление только контроллеров (обычно для WebAPI )
@@ -52,6 +94,10 @@ app.Map("/testpath", async context => await context.Response.WriteAsync("TestMid
 app.UseStaticFiles();
 
 app.UseRouting(); //Добавление пользовательской маршрутизации
+
+app.UseAuthentication();
+app.UseAuthorization();
+
 
 app.UseMiddleware<TestMiddleware>();
 
