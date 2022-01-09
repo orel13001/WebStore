@@ -61,7 +61,7 @@ servises.ConfigureApplicationCookie(opt =>
 
     opt.LoginPath = "/Account/Login";
     opt.LogoutPath = "/Account/Logout";
-    opt.AccessDeniedPath = "/Account/AccessDenide";
+    opt.AccessDeniedPath = "/Account/AccessDenied";
 
     opt.SlidingExpiration = true;
 
