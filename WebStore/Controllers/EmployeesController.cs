@@ -43,7 +43,7 @@ namespace WebStore.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Authorize(Roles ="Admin")]
+        //[Authorize(Roles ="Admin")]
         public IActionResult Edit(int? id)
         {
             if(id == null)
@@ -73,7 +73,7 @@ namespace WebStore.Controllers
         /// <param name="Model"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public IActionResult Edit(EmployeeEditViewModel Model)
         {
             //Обработка модели...
@@ -111,7 +111,7 @@ namespace WebStore.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize(Roles ="Admin")]
+        //[Authorize(Roles ="Admin")]
         public IActionResult Delete(int id)
         {
             if(id<0)
@@ -136,7 +136,7 @@ namespace WebStore.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public IActionResult DeleteConfirmed(int id)
         {
             if(!_EmployeesData.Delete(id))
