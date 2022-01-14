@@ -30,10 +30,12 @@ namespace WebStore.Controllers
                 UserName = model.UserName,
             };
 
-            var registration_result = await _userManager.CreateAsync(user, model.Password);
+            var registration_result = await _userManager.CreateAsync(user, model.Password).ConfigureAwait(true);
             if (registration_result.Succeeded)
             {
-                await _signInManager.SignInAsync(user, isPersistent: false);
+                await _userManager.AddToRoleAsync(user, Role.Users).ConfigureAwait(false);
+
+                await _signInManager.SignInAsync(user, isPersistent: false).ConfigureAwait(true);
                 return RedirectToAction("Index", "Home");
             }
 
@@ -58,7 +60,7 @@ namespace WebStore.Controllers
                 model.Password,
                 model.RememberMe,
                 true
-                );
+                ).ConfigureAwait(true);
 
             if (login_result.Succeeded)
             {
@@ -81,7 +83,7 @@ namespace WebStore.Controllers
 
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();
+            await _signInManager.SignOutAsync().ConfigureAwait(true);
             return RedirectToAction("Index", "Home");
         }
 
