@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,11 @@ namespace WebStore.Services.InSQL
         public InSqlProductData(WebStoreDB db) => _db = db;
 
         public IEnumerable<Brand> GetBrands() => _db.Brands;
+
+        public Product? GetProductById(int id) => _db.Products
+            .Include(p => p.Brand)
+            .Include(p => p.Section)
+            .FirstOrDefault(p => p.Id == id);
 
         public IEnumerable<Product> GetProducts(ProductFilter? Filter = null)
         {

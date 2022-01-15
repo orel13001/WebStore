@@ -27,5 +27,10 @@ namespace WebStore.Services.InMemory
 
             return products;
         }
+
+        public Product? GetProductById(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
