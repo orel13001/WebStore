@@ -5,6 +5,7 @@ using WebStore.Domain.Entities.Identity;
 using WebStore.Infrastructure.Conventions;
 using WebStore.Infrastructure.Middleware;
 using WebStore.Services;
+using WebStore.Services.InCookies;
 using WebStore.Services.InMemory;
 using WebStore.Services.InSQL;
 using WebStore.Services.Interfaces;
@@ -20,7 +21,8 @@ servises.AddControllersWithViews(opt =>
 //servises.AddSingleton<IEmployeesData, InMemoryEmployeesData>(); // Singleton, потому что InMemory
 //servises.AddSingleton<IProductData, InMemoryProductData>(); // Singleton, потому что InMemory
 servises.AddScoped<IProductData, InSqlProductData>();
-servises.AddScoped<IEmployeesData, InSqlEmployeeData>(); 
+servises.AddScoped<IEmployeesData, InSqlEmployeeData>();
+servises.AddScoped<ICartService, InCookiesCartService>();
 
 servises.AddDbContext<WebStoreDB>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
 servises.AddTransient<IDbInitializer, DbInitializer>();
