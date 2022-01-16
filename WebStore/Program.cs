@@ -124,9 +124,23 @@ app.MapGet("/throw", () =>
     });
 
 app.MapDefaultControllerRoute(); //Добавление обработки входящих подключений к MVC (стандартный маршрут по умолчанию "{controller=Home}/{action=Index}/{id?}")
-app.MapControllerRoute(
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+      name: "areas",
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}" // Маршрут для отдельных областей сайта.
+    );
+
+    endpoints.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}"); //настраиваемый маршрут. 
+    pattern: "{controller=Home}/{action=Index}/{id?}"); //настраиваемый маршрут по умолчанию. Перехватывает обращения, которые не были обработаны иными маршрутами. Идёт последним. 
+
+});
+
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Home}/{action=Index}/{id?}"); //настраиваемый маршрут. 
 
 #endregion
 app.Run();
