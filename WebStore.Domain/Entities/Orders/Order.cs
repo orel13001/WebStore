@@ -23,9 +23,8 @@ namespace WebStore.Domain.Entities.Orders
 		[MaxLength(200)]
 		public string Address { get; set; } = null!;
 
-		public string Description { get; set; }
+		public string? Description { get; set; }
 
-		[Required]
 		public DateTimeOffset Date { get; set; } = DateTimeOffset.Now;
 
 		public ICollection<OrderItem> Items { get; set; } = new List<OrderItem>();
