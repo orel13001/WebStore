@@ -17,7 +17,34 @@ namespace WebStore.Services.InSQL
 
         public InSqlProductData(WebStoreDB db) => _db = db;
 
-        public IEnumerable<Brand> GetBrands() => _db.Brands;
+		public Product CreateProduct(string Name, int Order, decimal Price, string ImageUrl, string Section, string? Brand = null)
+		{
+            var section = _db.Sections.FirstOrDefault(s => s.Name == Section) ?? new Section {Name = Section };
+            var brand = Brand is { Length: > 0}
+                ? _db.Brands.FirstOrDefault(s => s.Name == Brand) ?? new Brand {Name = Brand }
+                : null;
+
+
+            var product = new Product
+            {
+                Name = Name,
+                Order = Order,
+                Price = Price,
+                ImageUrl = ImageUrl,
+                Section = section,
+                Brand = brand,
+            };
+
+			_db.Products.Add(product);
+            _db.SaveChanges();
+
+            return product;
+		}
+
+		public Brand? GetBrandById(int id) => _db.Brands.Include(b => b.Products).FirstOrDefault(b => b.Id == id);
+		public Section? GetSectionById(int id) => _db.Sections.Include(s => s.Products).FirstOrDefault(s => s.Id == id);
+
+		public IEnumerable<Brand> GetBrands() => _db.Brands;
 
         public Product? GetProductById(int id) => _db.Products
             .Include(p => p.Brand)
@@ -49,6 +76,7 @@ namespace WebStore.Services.InSQL
             return query;
         }
 
-        public IEnumerable<Section> GetSections() => _db.Sections;
+
+		public IEnumerable<Section> GetSections() => _db.Sections;
     }
 }
