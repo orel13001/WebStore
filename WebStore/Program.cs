@@ -22,6 +22,7 @@ servises.AddControllersWithViews(opt =>
 servises.AddScoped<IProductData, InSqlProductData>();
 servises.AddScoped<IEmployeesData, InSqlEmployeeData>();
 servises.AddScoped<ICartService, InCookiesCartService>();
+servises.AddScoped<IOrderService, InSqlOrderService>();
 
 servises.AddDbContext<WebStoreDB>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
 servises.AddTransient<IDbInitializer, DbInitializer>();
