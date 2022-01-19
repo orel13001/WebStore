@@ -5,11 +5,13 @@ using WebStore.Data;
 using WebStore.Services.Interfaces;
 using WebStore.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
+using WebStore.Domain.Entities.Identity;
 
 namespace WebStore.Controllers
 { 
     //[Route("empl/[action]/{id?}")]            // Маршрутизация для отдельного контроллера
     //[Route("Staff/{action=Index}/{Id?}")]     // Маршрутов может быть несколько
+    [Authorize]
     public class EmployeesController : Controller
     {
         //private ICollection<Employee> _Employees;
@@ -43,7 +45,7 @@ namespace WebStore.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        //[Authorize(Roles ="Admin")]
+        [Authorize(Roles =Role.Administrotors)]
         public IActionResult Edit(int? id)
         {
             if(id == null)
@@ -73,7 +75,7 @@ namespace WebStore.Controllers
         /// <param name="Model"></param>
         /// <returns></returns>
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = Role.Administrotors)]
         public IActionResult Edit(EmployeeEditViewModel Model)
         {
             //Обработка модели...
@@ -111,7 +113,7 @@ namespace WebStore.Controllers
             return RedirectToAction("Index");
         }
 
-        //[Authorize(Roles ="Admin")]
+        [Authorize(Roles = Role.Administrotors)]
         public IActionResult Delete(int id)
         {
             if(id<0)
@@ -136,7 +138,7 @@ namespace WebStore.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = Role.Administrotors)]
         public IActionResult DeleteConfirmed(int id)
         {
             if(!_EmployeesData.Delete(id))

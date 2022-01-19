@@ -2,6 +2,8 @@
 using WebStore.Models;
 using WebStore.Services.Interfaces;
 using WebStore.ViewModels;
+using WebStore.Infrastructure.Mapping;
+
 
 namespace WebStore.Controllers
 {
@@ -12,14 +14,7 @@ namespace WebStore.Controllers
         {
             var product = ProductData.GetProducts()
                 .OrderBy(o => o.Order)
-                .Take(6)
-                .Select(o => new ProductViewModel
-                {
-                    Id = o.Id,
-                    Name = o.Name,
-                    Price = o.Price,
-                    ImageUrl = o.ImageUrl,
-                });
+                .Take(6).ToView();
             ViewBag.ProductData = product;
             //return Content("Data from new controller");
             return View();
