@@ -15,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 var servises = builder.Services;
 servises.AddControllersWithViews(opt =>
 {
-    opt.Conventions.Add(new TestConvention()); //Добавление соглашений
+    opt.Conventions.Add(new TestConvention()); //Добавление соглашений 
 }); // добавление инфраструктуры MVC с контроллерами и представлениими
 //servises.AddSingleton<IEmployeesData, InMemoryEmployeesData>(); // Singleton, потому что InMemory
 //servises.AddSingleton<IProductData, InMemoryProductData>(); // Singleton, потому что InMemory
@@ -24,7 +24,22 @@ servises.AddScoped<IEmployeesData, InSqlEmployeeData>();
 servises.AddScoped<ICartService, InCookiesCartService>();
 servises.AddScoped<IOrderService, InSqlOrderService>();
 
-servises.AddDbContext<WebStoreDB>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
+var database_type = builder.Configuration["Database"];
+switch (database_type)
+{
+    case "SqlServer":
+        servises.AddDbContext<WebStoreDB>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
+        break;
+
+    case "Sqlite":
+        servises.AddDbContext<WebStoreDB>(opt =>
+     opt.UseSqlite(builder.Configuration.GetConnectionString("Sqlite"),
+     o => o.MigrationsAssembly("WebStore.DAL.Sqlite"))); //нужен, т.к. в отдельной сборке
+        break;
+
+    default: throw new InvalidOperationException($"Тип БД {database_type} не поддерживается");
+}
+
 servises.AddTransient<IDbInitializer, DbInitializer>();
 
 servises.AddIdentity<User, Role>()              //Добавление сервиса идентификации
