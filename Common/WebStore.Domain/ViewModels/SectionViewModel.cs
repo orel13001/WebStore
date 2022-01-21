@@ -1,6 +1,4 @@
-﻿using WebStore.ViewModels;
-
-namespace WebStore.ViewModels
+﻿namespace WebStore.Domain.ViewModels
 {
     public class SectionViewModel
     {

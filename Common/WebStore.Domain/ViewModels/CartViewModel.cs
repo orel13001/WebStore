@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebStore.ViewModels
+namespace WebStore.Domain.ViewModels
 {
     public class CartViewModel
     {
@@ -12,6 +12,6 @@ namespace WebStore.ViewModels
 
         public int ItemsCount => Items.Sum(p => p.Quantity);
 
-        public Decimal TotalPrice => Items.Sum(p => p.Quantity * p.Product.Price);
+        public decimal TotalPrice => Items.Sum(p => p.Quantity * p.Product.Price);
     }
 }

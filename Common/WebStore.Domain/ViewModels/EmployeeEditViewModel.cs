@@ -6,20 +6,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebStore.ViewModels
+namespace WebStore.Domain.ViewModels
 {
     /// <summary>
     /// ViewModel сотрудника - оболочка для действия "редактирование" сотрудника
     /// </summary>
-    public class EmployeeEditViewModel : IValidatableObject 
+    public class EmployeeEditViewModel : IValidatableObject
     {
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
 
         [Display(Name = "Имя")]
         [Required(ErrorMessage = "Имя обязательно")]
-        [StringLength(255,MinimumLength = 2,ErrorMessage = "Длинна должна быть от 2 до 255 символов")]
-        [RegularExpression("([A-Z][a-z]+)|([А-ЯЁ][а-яё]+)", ErrorMessage ="Ошибка формата")]
+        [StringLength(255, MinimumLength = 2, ErrorMessage = "Длинна должна быть от 2 до 255 символов")]
+        [RegularExpression("([A-Z][a-z]+)|([А-ЯЁ][а-яё]+)", ErrorMessage = "Ошибка формата")]
         public string FirstName { get; set; }
 
         [Display(Name = "Фамилия")]
@@ -33,7 +33,7 @@ namespace WebStore.ViewModels
         public string Patronymic { get; set; }
 
         [Display(Name = "Возраст")]
-        [Range(18,80,ErrorMessage ="Возраст должен быть от 18 до 80 лет")]
+        [Range(18, 80, ErrorMessage = "Возраст должен быть от 18 до 80 лет")]
         public int Age { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext Context)

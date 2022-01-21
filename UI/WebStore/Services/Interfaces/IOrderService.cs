@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebStore.Domain.Entities.Orders;
-using WebStore.ViewModels;
+using WebStore.Domain.ViewModels;
 
 namespace WebStore.Services.Interfaces
 {
-	public interface IOrderService
+    public interface IOrderService
 	{
 		Task<IEnumerable<Order>> GetUserOrdersAsync (string UserName, CancellationToken Cancel = default);
 

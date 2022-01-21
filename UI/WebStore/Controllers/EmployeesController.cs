@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 //using WebStore.Models;
-using WebStore.ViewModels;
 using WebStore.Data;
 using WebStore.Services.Interfaces;
 using WebStore.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using WebStore.Domain.Entities.Identity;
+using WebStore.Domain.ViewModels;
 
 namespace WebStore.Controllers
-{ 
+{
     //[Route("empl/[action]/{id?}")]            // Маршрутизация для отдельного контроллера
     //[Route("Staff/{action=Index}/{Id?}")]     // Маршрутов может быть несколько
     [Authorize]
