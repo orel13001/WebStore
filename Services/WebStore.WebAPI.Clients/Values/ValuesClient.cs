@@ -1,11 +1,18 @@
 ﻿
 using WebStore.Interfaces.TestAPI;
+using WebStore.WebAPI.Clients.Base;
 
 namespace WebStore.WebAPI.Clients.Values
 {
-    public class ValuesClient : IValuesService
+    public class ValuesClient : BaseClient, IValuesService
     {
         private HttpClient _Client;
+
+        public ValuesClient(HttpClient client) : base(client, "api/values")
+        {
+
+        }
+
         public void Add(string value)
         {
             
