@@ -12,11 +12,11 @@ namespace WebStore.Interfaces.TestAPI
 
         int Count();
 
-        string GetById(int Id);
+        string? GetById(int Id);
 
         void Add(string value);
         void Edit(int Id, string Value);
 
-        void Delete(int Id);
+        bool Delete(int Id);
     }
 }
