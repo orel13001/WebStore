@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,11 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebStore.DAL.Context;
-using WebStore.Data;
 using WebStore.Domain.Entities.Identity;
-using WebStore.Services.Interfaces;
+using WebStore.Interfaces.Services;
+using WebStore.Services.Data;
 
-namespace WebStore.Services
+namespace WebStore.Services.Services
 {
     public class DbInitializer : IDbInitializer
     {
@@ -36,7 +37,7 @@ namespace WebStore.Services
                 await RemoveAsync(Cancel).ConfigureAwait(false);
             }
 
-            var pend_migration = await _db.Database.GetPendingMigrationsAsync(Cancel); 
+            var pend_migration = await _db.Database.GetPendingMigrationsAsync(Cancel);
             if (pend_migration.Any())
             {
                 _logger.LogInformation("Выполнение миграции БД ...");
@@ -93,12 +94,12 @@ namespace WebStore.Services
                 child_section.Parent = sections_pool[(int)child_section.ParentId!];
             }
 
-            foreach(var product in TestData.Products)
+            foreach (var product in TestData.Products)
             {
                 product.Section = sections_pool[product.SectionId];
                 if (product.BrandId is { } brandId)
                 {
-                    product.Brand=brands_pool[brandId];
+                    product.Brand = brands_pool[brandId];
                 }
 
                 product.Id = 0;
@@ -117,7 +118,7 @@ namespace WebStore.Services
                 brand.Id = 0;
             }
 
-            await using(await _db.Database.BeginTransactionAsync(Cancel))
+            await using (await _db.Database.BeginTransactionAsync(Cancel))
             {
                 await _db.Sections.AddRangeAsync(TestData.Sections, Cancel);
                 await _db.Brands.AddRangeAsync(TestData.Brands, Cancel);
@@ -147,9 +148,9 @@ namespace WebStore.Services
                 else
                 {
                     _logger.LogInformation("Роль {0} не существует в БД. {1} с.", roleName, timer.Elapsed.TotalSeconds);
-                    
+
                     await _roleManager.CreateAsync(new Role { Name = roleName });
-                    
+
                     _logger.LogInformation("Роль {0} создана в БД. {1} с.", roleName, timer.Elapsed.TotalSeconds);
                 }
             }
@@ -169,14 +170,14 @@ namespace WebStore.Services
                     _logger.LogInformation("Пользователь {0} создан в БД. Наделяю правами администратора. {1} с.", User.Administrator, timer.Elapsed.TotalSeconds);
 
                     await _userManager.AddToRoleAsync(admin, Role.Administrotors);
-                    
+
                     _logger.LogInformation("Пользователь {0} готов к работе. {1} с.", User.Administrator, timer.Elapsed.TotalSeconds);
                 }
                 else
                 {
                     var errors = create_result.Errors.Select(e => e.Description);
-                    _logger.LogInformation("учётная запись администратора не создана. Ошибки: {0}", String.Join(',', errors));
-                    throw new InvalidOperationException($"Невозможно создать пользователя {User.Administrator}, по причине {String.Join(',', errors)}");
+                    _logger.LogInformation("учётная запись администратора не создана. Ошибки: {0}", string.Join(',', errors));
+                    throw new InvalidOperationException($"Невозможно создать пользователя {User.Administrator}, по причине {string.Join(',', errors)}");
                 }
             }
 

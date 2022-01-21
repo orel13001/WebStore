@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using WebStore.Domain.Entities;
 using WebStore.Domain.ViewModels;
 
-namespace WebStore.Infrastructure.Mapping
+namespace WebStore.Services.Mapping
 {
     public static class ProductMapper
     {
@@ -33,7 +33,7 @@ namespace WebStore.Infrastructure.Mapping
             };
 
         public static IEnumerable<ProductViewModel?> ToView(this IEnumerable<Product?> products) => products.Select(ToView);
-        
+
         public static IEnumerable<Product?> ToView(this IEnumerable<ProductViewModel?> products) => products.Select(FromView);
     }
 }

@@ -1,10 +1,11 @@
-﻿using WebStore.Services.Interfaces;
-using WebStore.Domain.Entities;
+﻿using WebStore.Domain.Entities;
 using Newtonsoft.Json;
-using WebStore.Infrastructure.Mapping;
 using WebStore.Domain.ViewModels;
+using Microsoft.AspNetCore.Http;
+using WebStore.Interfaces.Services;
+using WebStore.Services.Mapping;
 
-namespace WebStore.Services.InCookies
+namespace WebStore.Services.Services.InCookies
 {
     public class InCookiesCartService : ICartService
     {
@@ -21,7 +22,7 @@ namespace WebStore.Services.InCookies
                 var cookies = context?.Response.Cookies;
 
                 var cart_cookie = context.Request.Cookies[_cartName];
-                if(cart_cookie is null)
+                if (cart_cookie is null)
                 {
                     var cart = new Cart();
                     cookies.Append(_cartName, JsonConvert.SerializeObject(cart));
@@ -82,7 +83,7 @@ namespace WebStore.Services.InCookies
             if (item.Quantity > 0)
                 item.Quantity--;
 
-            if(item.Quantity == 0)
+            if (item.Quantity == 0)
                 cart.Items.Remove(item);
             Cart = cart;
         }

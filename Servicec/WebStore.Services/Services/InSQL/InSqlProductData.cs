@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using WebStore.DAL.Context;
 using WebStore.Domain;
 using WebStore.Domain.Entities;
-using WebStore.Services.Interfaces;
+using WebStore.Interfaces.Services;
 
-namespace WebStore.Services.InSQL
+namespace WebStore.Services.Services.InSQL
 {
     public class InSqlProductData : IProductData
     {
@@ -17,11 +17,11 @@ namespace WebStore.Services.InSQL
 
         public InSqlProductData(WebStoreDB db) => _db = db;
 
-		public Product CreateProduct(string Name, int Order, decimal Price, string ImageUrl, string Section, string? Brand = null)
-		{
-            var section = _db.Sections.FirstOrDefault(s => s.Name == Section) ?? new Section {Name = Section };
-            var brand = Brand is { Length: > 0}
-                ? _db.Brands.FirstOrDefault(s => s.Name == Brand) ?? new Brand {Name = Brand }
+        public Product CreateProduct(string Name, int Order, decimal Price, string ImageUrl, string Section, string? Brand = null)
+        {
+            var section = _db.Sections.FirstOrDefault(s => s.Name == Section) ?? new Section { Name = Section };
+            var brand = Brand is { Length: > 0 }
+                ? _db.Brands.FirstOrDefault(s => s.Name == Brand) ?? new Brand { Name = Brand }
                 : null;
 
 
@@ -35,16 +35,16 @@ namespace WebStore.Services.InSQL
                 Brand = brand,
             };
 
-			_db.Products.Add(product);
+            _db.Products.Add(product);
             _db.SaveChanges();
 
             return product;
-		}
+        }
 
-		public Brand? GetBrandById(int id) => _db.Brands.Include(b => b.Products).FirstOrDefault(b => b.Id == id);
-		public Section? GetSectionById(int id) => _db.Sections.Include(s => s.Products).FirstOrDefault(s => s.Id == id);
+        public Brand? GetBrandById(int id) => _db.Brands.Include(b => b.Products).FirstOrDefault(b => b.Id == id);
+        public Section? GetSectionById(int id) => _db.Sections.Include(s => s.Products).FirstOrDefault(s => s.Id == id);
 
-		public IEnumerable<Brand> GetBrands() => _db.Brands;
+        public IEnumerable<Brand> GetBrands() => _db.Brands;
 
         public Product? GetProductById(int id) => _db.Products
             .Include(p => p.Brand)
@@ -66,7 +66,7 @@ namespace WebStore.Services.InSQL
                 if (Filter?.SectionId != null)
                 {
                     query = query.Where(e => e.SectionId == Filter.SectionId);
-                } 
+                }
                 if (Filter?.BrandId != null)
                 {
                     query = query.Where(e => e.BrandId == Filter.BrandId);
@@ -77,6 +77,6 @@ namespace WebStore.Services.InSQL
         }
 
 
-		public IEnumerable<Section> GetSections() => _db.Sections;
+        public IEnumerable<Section> GetSections() => _db.Sections;
     }
 }
