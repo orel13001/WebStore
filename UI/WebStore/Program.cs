@@ -10,6 +10,7 @@ using WebStore.Services.Services;
 using WebStore.Services.Services.InCookies;
 using WebStore.Services.Services.InSQL;
 using WebStore.WebAPI.Clients.Employees;
+using WebStore.WebAPI.Clients.Products;
 using WebStore.WebAPI.Clients.Values;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,7 +23,7 @@ servises.AddControllersWithViews(opt =>
 }); // добавление инфраструктуры MVC с контроллерами и представлениими
 //servises.AddSingleton<IEmployeesData, InMemoryEmployeesData>(); // Singleton, потому что InMemory
 //servises.AddSingleton<IProductData, InMemoryProductData>(); // Singleton, потому что InMemory
-servises.AddScoped<IProductData, InSqlProductData>();
+//servises.AddScoped<IProductData, InSqlProductData>();
 //servises.AddScoped<IEmployeesData, InSqlEmployeeData>();
 servises.AddScoped<ICartService, InCookiesCartService>();
 servises.AddScoped<IOrderService, InSqlOrderService>();
@@ -30,6 +31,7 @@ servises.AddScoped<IOrderService, InSqlOrderService>();
 var configuration = builder.Configuration;
 servises.AddHttpClient<IValuesService, ValuesClient>(client => client.BaseAddress = new(configuration["WebAPI"]));
 servises.AddHttpClient<IEmployeesData, EmployeesClient>(client => client.BaseAddress = new(configuration["WebAPI"]));
+servises.AddHttpClient<IProductData, ProductsClient>(client => client.BaseAddress = new(configuration["WebAPI"]));
 
 servises.AddDbContext<WebStoreDB>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
 servises.AddTransient<IDbInitializer, DbInitializer>();
