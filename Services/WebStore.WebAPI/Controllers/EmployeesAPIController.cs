@@ -24,7 +24,7 @@ namespace WebStore.WebAPI.Controllers
             return Ok(employees);
         }
 
-        [HttpGet]
+        [HttpGet("{Id}")]
         public IActionResult GetById(int id)
         {
             var employee = _employeesData.GetById(id);
