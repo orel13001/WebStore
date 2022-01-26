@@ -33,45 +33,45 @@ namespace WebStore.WebAPI.Clients.Products
                 Brand = Brand,
             });
 
-            var product = response.Content.ReadFromJsonAsync<Product>().Result;
-            return product!;
+            var product = response.Content.ReadFromJsonAsync<ProductDTO>().Result;
+            return product!.FromDTO();
         }
 
         public Brand? GetBrandById(int id)
         {
-            var brand = Get<Brand>($"{Address}/brand/{id}");
-            return brand!;
+            var brand = Get<BrandDTO>($"{Address}/brand/{id}");
+            return brand!.FromDTO();
         }
 
         public IEnumerable<Brand> GetBrands()
         {
-            var brands = Get<IEnumerable<Brand>>($"{Address}/brands");
-            return brands!;
+            var brands = Get<IEnumerable<BrandDTO>>($"{Address}/brands");
+            return brands!.FromDTO();
         }
 
         public Product? GetProductById(int id)
         {
-            var product = Get<Product>($"{Address}/{id}");
-            return product!;
+            var product = Get<ProductDTO>($"{Address}/{id}");
+            return product!.FromDTO();
         }
 
         public IEnumerable<Product> GetProducts(ProductFilter? Filter = null)
         {
             var response = Post(Address, Filter ?? new());
-            var products = response.Content. ReadFromJsonAsync<IEnumerable<Product>>().Result;
-            return products!;
+            var products = response.Content. ReadFromJsonAsync<IEnumerable<ProductDTO>>().Result;
+            return products!.FromDTO();
         }
 
         public Section? GetSectionById(int id)
         {
-            var section = Get<Section>($"{Address}/sections/{id}");
-            return section!;
+            var section = Get<SectionDTO>($"{Address}/sections/{id}");
+            return section!.FromDTO();
         }
 
         public IEnumerable<Section> GetSections()
         {
-            var sections = Get<IEnumerable<Section>>($"{Address}/sections");
-            return sections!;
+            var sections = Get<IEnumerable<SectionDTO>>($"{Address}/sections");
+            return sections!.FromDTO();
         }
     }
 }

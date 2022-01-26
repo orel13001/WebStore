@@ -18,7 +18,7 @@ namespace WebStore.WebAPI.Controllers
         public IActionResult GetSections()
         {
             var sections = _productData.GetSections();
-            return Ok(sections);
+            return Ok(sections.ToDTO());
         }
 
         [HttpGet("sections/{Id}")]
@@ -27,7 +27,7 @@ namespace WebStore.WebAPI.Controllers
             var section = _productData.GetSectionById(Id);
             if(section is null)
                 return NotFound();
-            return Ok(section);
+            return Ok(section.ToDTO());
         }
 
 
@@ -35,7 +35,7 @@ namespace WebStore.WebAPI.Controllers
         public IActionResult GetBrands()
         {
             var brands = _productData.GetBrands();
-            return Ok(brands);
+            return Ok(brands.ToDTO());
         }
 
         [HttpGet("brsnds/{Id}")]
@@ -44,7 +44,7 @@ namespace WebStore.WebAPI.Controllers
             var brend = _productData.GetBrandById(Id);
             if (brend is null)
                 return NotFound();
-            return Ok(brend);
+            return Ok(brend.ToDTO());
         }
 
 
@@ -52,7 +52,7 @@ namespace WebStore.WebAPI.Controllers
         public IActionResult GetProducts(ProductFilter? filter = null)
         {
             var products = _productData.GetProducts(filter);
-            return Ok(products);
+            return Ok(products.ToDTO());
         }
 
         [HttpGet("{id}")]
@@ -62,7 +62,7 @@ namespace WebStore.WebAPI.Controllers
             if (product is null)
                 return NotFound();
 
-            return Ok(product);
+            return Ok(product.ToDTO());
         }
 
         [HttpPost("new/{Name}")]
@@ -70,7 +70,7 @@ namespace WebStore.WebAPI.Controllers
         {
             var product = _productData.CreateProduct(Model.Name, Model.Order, Model.Price, Model.ImageUrl, Model.Section, Model.Brand);
 
-            return CreatedAtAction(nameof(GetProductById), new {product.Id}, product);
+            return CreatedAtAction(nameof(GetProductById), new {product.Id}, product.ToDTO());
         }
     }
 }
