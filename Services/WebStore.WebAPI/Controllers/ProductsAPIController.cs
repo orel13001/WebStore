@@ -8,7 +8,7 @@ namespace WebStore.WebAPI.Controllers
 
     [ApiController]
     [Route("api/products")] // http://localhost:5001/api/products
-    public class ProductsAPIController : Controller
+    public class ProductsAPIController : ControllerBase
     {
         private readonly IProductData _productData;
 
