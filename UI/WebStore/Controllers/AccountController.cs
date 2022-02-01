@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Domain.ViewModels.Identity;
@@ -20,15 +21,17 @@ namespace WebStore.Controllers
         public IActionResult Register() => View(new RegisterUserViewModel());
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterUserViewModel model)
+        public async Task<IActionResult> Register(RegisterUserViewModel model, [FromServices] IMapper Mapper)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
-            var user = new User()
-            {
-                UserName = model.UserName,
-            };
+            var user = Mapper.Map<User>(model);
+
+            //var user = new User()
+            //{
+            //    UserName = model.UserName,
+            //};
 
             var registration_result = await _userManager.CreateAsync(user, model.Password).ConfigureAwait(true);
             if (registration_result.Succeeded)
