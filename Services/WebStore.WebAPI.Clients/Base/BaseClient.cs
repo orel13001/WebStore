@@ -24,6 +24,8 @@ namespace WebStore.WebAPI.Clients.Base
         protected async Task<T?> GetAsync<T> (string url, CancellationToken Cancel = default)
         {
             var response = await Http.GetAsync(url, Cancel).ConfigureAwait(false);
+            if (response.StatusCode == System.Net.HttpStatusCode.NoContent) return default;
+            
             return await response
                 .EnsureSuccessStatusCode()
                 .Content
