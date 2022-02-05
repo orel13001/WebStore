@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 using WebStore.DAL.Context;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Infrastructure.Conventions;
@@ -10,6 +11,7 @@ using WebStore.Services.Services;
 using WebStore.Services.Services.InCookies;
 using WebStore.Services.Services.InSQL;
 using WebStore.WebAPI.Clients.Employees;
+using WebStore.WebAPI.Clients.Identity;
 using WebStore.WebAPI.Clients.Orders;
 using WebStore.WebAPI.Clients.Products;
 using WebStore.WebAPI.Clients.Values;
@@ -39,8 +41,21 @@ servises.AddDbContext<WebStoreDB>(opt => opt.UseSqlServer(builder.Configuration.
 servises.AddTransient<IDbInitializer, DbInitializer>();
 
 servises.AddIdentity<User, Role>()              //Добавление сервиса идентификации
-    .AddEntityFrameworkStores<WebStoreDB>()     //Указание источника данных
+    //.AddEntityFrameworkStores<WebStoreDB>()     //Указание источника данных
     .AddDefaultTokenProviders();                //указание токена по умолчанию
+
+
+servises.AddHttpClient("WebStoreAPIIdentity", client => client.BaseAddress = new(configuration["WebAPI"]))
+    .AddTypedClient<IUserStore<User>, UsersClient>()
+    .AddTypedClient<IUserRoleStore<User>, UsersClient>()
+    .AddTypedClient<IUserPasswordStore<User>, UsersClient>()
+    .AddTypedClient<IUserEmailStore<User>, UsersClient>()
+    .AddTypedClient<IUserPhoneNumberStore<User>, UsersClient>()
+    .AddTypedClient<IUserTwoFactorStore<User>, UsersClient>()
+    .AddTypedClient<IUserLoginStore<User>, UsersClient>()
+    .AddTypedClient<IUserClaimStore<User>, UsersClient>()
+    .AddTypedClient<IRoleStore<Role>, RolesClient>();
+
 
 //конфигурация сервиса идентификации
 servises.Configure<IdentityOptions>(opt =>
@@ -82,6 +97,9 @@ servises.ConfigureApplicationCookie(opt =>
 
 //servises.AddMvc(); // базовая инфраструктура MVC
 //servises.AddControllers(); // Добавление только контроллеров (обычно для WebAPI )
+
+
+servises.AddAutoMapper(Assembly.GetEntryAssembly());
 
 
 #endregion

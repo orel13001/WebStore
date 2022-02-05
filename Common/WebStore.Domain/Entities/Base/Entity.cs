@@ -11,6 +11,9 @@ namespace WebStore.Domain.Entities.Base
 {
     public abstract class Entity : IEntity
     {
+        /// <summary>
+        /// Идентификатор
+        /// </summary>
         [Key] //свойство является ключом
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]//свойство является автоидентификатором
         public int Id { get; set ; }
