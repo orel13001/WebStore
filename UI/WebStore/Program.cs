@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Serilog.Events;
+using Serilog.Formatting.Json;
 using System.Reflection;
 using WebStore.DAL.Context;
 using WebStore.Domain.Entities.Identity;
@@ -19,6 +22,16 @@ using WebStore.WebAPI.Clients.Values;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.AddLog4Net();
+builder.Host.UseSerilog((host, log) => log.ReadFrom.Configuration(host.Configuration)
+   .MinimumLevel.Debug()
+   .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+   .Enrich.FromLogContext()
+   .WriteTo.Console(
+        outputTemplate: "[{Timestamp:HH:mm:ss.fff} {Level:u3}]{SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}")
+   .WriteTo.RollingFile($@".\Logs\WebStore[{DateTime.Now:yyyy-MM-ddTHH-mm-ss}].log")
+   .WriteTo.File(new JsonFormatter(",", true), $@".\Logs\WebStore[{DateTime.Now:yyyy-MM-ddTHH-mm-ss}].log.json")
+   .WriteTo.Seq("http://localhost:5341/")
+   );
 
 #region Настройка построителя приложения - определение содержимого (определяется набор сервисов приложения и его бизнесс-логика)
 var servises = builder.Services;
@@ -133,6 +146,7 @@ app.UseRouting(); //Добавление пользовательской мар
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseMiddleware<TestMiddleware>();
 
