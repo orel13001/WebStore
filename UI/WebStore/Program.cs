@@ -7,6 +7,7 @@ using WebStore.Infrastructure.Conventions;
 using WebStore.Infrastructure.Middleware;
 using WebStore.Interfaces.Services;
 using WebStore.Interfaces.TestAPI;
+using WebStore.Loggin;
 using WebStore.Services.Services;
 using WebStore.Services.Services.InCookies;
 using WebStore.Services.Services.InSQL;
@@ -17,6 +18,7 @@ using WebStore.WebAPI.Clients.Products;
 using WebStore.WebAPI.Clients.Values;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.AddLog4Net();
 
 #region Настройка построителя приложения - определение содержимого (определяется набор сервисов приложения и его бизнесс-логика)
 var servises = builder.Services;
