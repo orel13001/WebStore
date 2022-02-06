@@ -44,6 +44,8 @@ servises.AddControllersWithViews(opt =>
 //servises.AddScoped<IProductData, InSqlProductData>();
 //servises.AddScoped<IEmployeesData, InSqlEmployeeData>();
 servises.AddScoped<ICartService, InCookiesCartService>();
+servises.AddScoped<ICartStore, InCookiesCartStore>();
+
 //servises.AddScoped<IOrderService, InSqlOrderService>();
 
 var configuration = builder.Configuration;
