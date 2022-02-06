@@ -21,7 +21,7 @@ namespace WebStore.Controllers
 
         public string ConfiguredAction(string id)
         {
-            return $"Hellow World {id}!";
+            return $"Hellow World {id}";
         }
 
         public void Throw(string Message) => throw new ApplicationException(Message);
