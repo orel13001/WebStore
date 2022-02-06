@@ -14,8 +14,9 @@ namespace WebStore.Controllers
 
         public IActionResult Index()
         {
-            var values = _valuesService.GetValues();
-            return View(values);
+            //var values = _valuesService.GetValues();
+            //return View(values);
+            return View(Enumerable.Empty<string>());
         }
     }
 }
