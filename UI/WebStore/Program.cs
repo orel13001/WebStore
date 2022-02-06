@@ -43,7 +43,9 @@ servises.AddControllersWithViews(opt =>
 //servises.AddSingleton<IProductData, InMemoryProductData>(); // Singleton, потому что InMemory
 //servises.AddScoped<IProductData, InSqlProductData>();
 //servises.AddScoped<IEmployeesData, InSqlEmployeeData>();
-servises.AddScoped<ICartService, InCookiesCartService>();
+servises.AddScoped<ICartService, CartService>();
+servises.AddScoped<ICartStore, InCookiesCartStore>();
+
 //servises.AddScoped<IOrderService, InSqlOrderService>();
 
 var configuration = builder.Configuration;
