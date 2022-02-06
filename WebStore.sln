@@ -29,7 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.WebAPI", "Services
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.WebAPI.Clients", "Services\WebStore.WebAPI.Clients\WebStore.WebAPI.Clients.csproj", "{39A9F29D-35D3-44A6-8057-4FD36E097D11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStore.WPF", "UI\WebStore.WPF\WebStore.WPF.csproj", "{8D7495D6-297C-4DBE-938E-7EC0B8928049}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.WPF", "UI\WebStore.WPF\WebStore.WPF.csproj", "{8D7495D6-297C-4DBE-938E-7EC0B8928049}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStore.Loggin", "Common\WebStore.Loggin\WebStore.Loggin.csproj", "{31DBCF85-B3E2-46ED-AFF9-13A648DF9360}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +75,10 @@ Global
 		{8D7495D6-297C-4DBE-938E-7EC0B8928049}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D7495D6-297C-4DBE-938E-7EC0B8928049}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D7495D6-297C-4DBE-938E-7EC0B8928049}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31DBCF85-B3E2-46ED-AFF9-13A648DF9360}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31DBCF85-B3E2-46ED-AFF9-13A648DF9360}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31DBCF85-B3E2-46ED-AFF9-13A648DF9360}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31DBCF85-B3E2-46ED-AFF9-13A648DF9360}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,6 +93,7 @@ Global
 		{5CD8D0F9-55EA-42E3-A6CD-0F9F30F10353} = {53EBC8B8-FD24-49E9-A087-AA83C2BED9D6}
 		{39A9F29D-35D3-44A6-8057-4FD36E097D11} = {53EBC8B8-FD24-49E9-A087-AA83C2BED9D6}
 		{8D7495D6-297C-4DBE-938E-7EC0B8928049} = {BF579DEB-712A-47EF-A6FF-2E096F335A89}
+		{31DBCF85-B3E2-46ED-AFF9-13A648DF9360} = {875AA4E8-C4F7-4DB9-9504-39F829B17F87}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB8EC849-729F-4F88-841D-F2A036333497}
