@@ -36,7 +36,7 @@ namespace WebStore.Services.Services
             if (item == null)
                 cart.Items.Add(new CartItem { ProductId = id, Quantity = 1 });
             else
-                item.Quantity+=2;
+                item.Quantity++;
 
             _CartStore.Cart = cart;
         }
