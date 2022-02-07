@@ -11,7 +11,7 @@ namespace WebStore.Controllers
 {
     //[Route("empl/[action]/{id?}")]            // Маршрутизация для отдельного контроллера
     //[Route("Staff/{action=Index}/{Id?}")]     // Маршрутов может быть несколько
-    [Authorize]
+    //[Authorize]
     public class EmployeesController : Controller
     {
         //private ICollection<Employee> _Employees;
