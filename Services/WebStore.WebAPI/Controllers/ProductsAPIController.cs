@@ -39,7 +39,7 @@ namespace WebStore.WebAPI.Controllers
             return Ok(brands.ToDTO());
         }
 
-        [HttpGet("brsnds/{Id}")]
+        [HttpGet("brands/{Id}")]
         public IActionResult GetBrandById(int Id)
         {
             var brend = _productData.GetBrandById(Id);

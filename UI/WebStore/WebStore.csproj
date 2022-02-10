@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="Views\Shared\Components\BreadCrumbs\Default.cshtml" />
     <None Include="Views\UserProfile\Index.cshtml" />
   </ItemGroup>
 
