@@ -40,7 +40,7 @@ namespace WebStore.WebAPI.Clients.Products
 
         public Brand? GetBrandById(int id)
         {
-            var brand = Get<BrandDTO>($"{Address}/brand/{id}");
+            var brand = Get<BrandDTO>($"{Address}/brands/{id}");
             return brand!.FromDTO();
         }
 
